@@ -1,0 +1,21 @@
+<h1>SQL解析</h1>
+<p>SQLを記入してボタンを押すだけの簡単仕様</p>
+<p>DBを使わないのでプライバシーも安心</p>
+<hr>
+
+<div class="row">
+  <div class="col-sm-6">
+    <%= simple_form_for :data, action: 'kaigyo#index' , method: :post, html: { class: 'form-horizontal' } do |f| %>
+      <%= f.input :sql, as: :text, label: "テキスト" ,input_html: {rows: 30, cols: 80, value: "SELECT ocn.Table1.field11, ocn.Table1.field12, ocn.Table1.field13, ocn.Table2.field21, ocn.Table2.field22, ocn.Table2.field23, ocn.Table2.field24, ocn.Table2.field25
+FROM ocn.Table1, ocn.Table2
+WHERE ocn.Table1.field11 between 'xxx' AND 'yyy'
+AND ocn.Table1.field13 = 'zzz'
+AND ocn.Table2.field22 LIKE 'tt%'"} %>
+      <br>
+      <%= f.button :submit, value: "解析", class: "btn-primary" %>
+    <% end %>
+  </div>
+  <div class="col-sm-6">
+    <%= @processed_text.html_safe if @processed_text %>
+  </div>
+</div>

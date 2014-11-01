@@ -1,0 +1,2 @@
+Prefix Verb URI Pattern Controller#Action
+       GET  /           kaigyo#index
