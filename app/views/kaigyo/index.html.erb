@@ -6,16 +6,37 @@
 <div class="row">
   <div class="col-sm-6">
     <%= simple_form_for :data, action: 'kaigyo#index' , method: :post, html: { class: 'form-horizontal' } do |f| %>
+    <% if @sql %>
+      <%= f.input :sql, as: :text, label: "テキスト" ,input_html: {rows: 30, cols: 80, value: @sql} %>
+    <% else %>
       <%= f.input :sql, as: :text, label: "テキスト" ,input_html: {rows: 30, cols: 80, value: "SELECT ocn.Table1.field11, ocn.Table1.field12, ocn.Table1.field13, ocn.Table2.field21, ocn.Table2.field22, ocn.Table2.field23, ocn.Table2.field24, ocn.Table2.field25
 FROM ocn.Table1, ocn.Table2
 WHERE ocn.Table1.field11 between 'xxx' AND 'yyy'
 AND ocn.Table1.field13 = 'zzz'
 AND ocn.Table2.field22 LIKE 'tt%'"} %>
+    <% end %>
       <br>
       <%= f.button :submit, value: "解析", class: "btn-primary" %>
     <% end %>
   </div>
   <div class="col-sm-6">
-    <%= @processed_text.html_safe if @processed_text %>
+    <% if @analyzed_sal %>
+      <h2>Raw SQL</h2>
+      <%= @sql %>
+      <br>
+      <h2>テーブル一覧</h2>
+      <% @tables.each do |tablename, count| %>
+        <%= tablename + " " + count.to_s %>
+        <br>
+      <% end %>
+      <hr>
+      <% @analyzed_sal.each do |type, terms| %>
+        <h2><%= @sql_change[type] %></h2>
+        <% terms.each do |term| %>
+          <%= term %>
+          <br>
+        <% end %>
+      <% end %>
+    <% end %>
   </div>
 </div>
