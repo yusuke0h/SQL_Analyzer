@@ -12,6 +12,7 @@ class KaigyoController < ApplicationController
       @tables = Hash.new(0)
       @analyzed_sal[:tables].each do |from_sentence|
         from_terms = from_sentence.split.map { |e| e.strip }
+        @tables[from_terms.first] += 1 if from_terms.size == 1
         from_terms.each_with_index do |term, index|
           case from_terms[index-1]
           when /FROM/
